@@ -27,9 +27,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       key: scaffoldState,
-      body: Center(
-        child: Text('Hello World'),
+      body: Stack(
+        children: <Widget>[_buildWidgetAlbum(mediaQuery)],
       ),
     );
   }
+}
+
+Widget _buildWidgetAlbum(MediaQueryData mediaQuery) {
+  return Container(
+    width: double.infinity,
+    height: mediaQuery.size.height / 1.7,
+    decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(48.0)),
+        image: DecorationImage(
+            image: AssetImage('assets/kenshi-yonezu-cover.jpg'),
+            fit: BoxFit.cover)),
+  );
 }
