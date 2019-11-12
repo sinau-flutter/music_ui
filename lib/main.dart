@@ -28,7 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: scaffoldState,
       body: Stack(
-        children: <Widget>[_buildWidgetAlbum(mediaQuery)],
+        children: <Widget>[
+          _buildWidgetAlbum(mediaQuery),
+          _buildWidgetActionAppBar(mediaQuery)
+        ],
       ),
     );
   }
@@ -44,5 +47,25 @@ Widget _buildWidgetAlbum(MediaQueryData mediaQuery) {
         image: DecorationImage(
             image: AssetImage('assets/kenshi-yonezu-cover.jpg'),
             fit: BoxFit.cover)),
+  );
+}
+
+Widget _buildWidgetActionAppBar(MediaQueryData mediaQuery) {
+  return Padding(
+    padding: EdgeInsets.only(
+        left: 16.0, top: mediaQuery.padding.top + 16.0, right: 16.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Icon(
+          Icons.menu,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.info_outline,
+          color: Colors.white,
+        )
+      ],
+    ),
   );
 }
