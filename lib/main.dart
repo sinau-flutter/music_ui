@@ -21,7 +21,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Song> listSong = List();
+
   @override
+  void initState() {
+    initListSong();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
 
@@ -29,43 +36,224 @@ class _HomeScreenState extends State<HomeScreen> {
       key: scaffoldState,
       body: Stack(
         children: <Widget>[
-          _buildWidgetAlbum(mediaQuery),
-          _buildWidgetActionAppBar(mediaQuery)
+          _buildWidgetAlbumCover(mediaQuery),
+          _buildWidgetActionAppBar(mediaQuery),
+          _buildWidgetArtistName(mediaQuery),
+          _buildWidgetFloatingActionButton(mediaQuery),
+          _buildWidgetListSong(mediaQuery)
         ],
       ),
     );
   }
-}
 
-Widget _buildWidgetAlbum(MediaQueryData mediaQuery) {
-  return Container(
-    width: double.infinity,
-    height: mediaQuery.size.height / 1.7,
-    decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(48.0)),
-        image: DecorationImage(
-            image: AssetImage('assets/kenshi-yonezu-cover.jpg'),
-            fit: BoxFit.cover)),
-  );
-}
+  Widget _buildWidgetAlbumCover(MediaQueryData mediaQuery) {
+    return Container(
+      width: double.infinity,
+      height: mediaQuery.size.height / 1.7,
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(48.0)),
+          image: DecorationImage(
+              image: AssetImage('assets/kenshi-yonezu-cover.jpg'),
+              fit: BoxFit.cover)),
+    );
+  }
 
-Widget _buildWidgetActionAppBar(MediaQueryData mediaQuery) {
-  return Padding(
-    padding: EdgeInsets.only(
-        left: 16.0, top: mediaQuery.padding.top + 16.0, right: 16.0),
-    child: Row(
+  Widget _buildWidgetActionAppBar(MediaQueryData mediaQuery) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: 16.0, top: mediaQuery.padding.top + 16.0, right: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.info_outline,
+            color: Colors.white,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWidgetArtistName(MediaQueryData mediaQuery) {
+    return SizedBox(
+      height: mediaQuery.size.height / 1.7,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints contrains) {
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  child: Text(
+                    'Yonezu',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'CoralPen',
+                        fontSize: 72.0),
+                  ),
+                  top: contrains.maxHeight - 100,
+                ),
+                Positioned(
+                  child: Text(
+                    'Kenshi',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'CoralPen',
+                        fontSize: 72.0),
+                  ),
+                  top: contrains.maxHeight - 160,
+                ),
+                Positioned(
+                  child: Text(
+                    'Trending',
+                    style: TextStyle(
+                        color: Colors.cyan,
+                        fontFamily: 'Campton_Light',
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w800),
+                  ),
+                  top: contrains.maxHeight - 175,
+                )
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWidgetFloatingActionButton(MediaQueryData mediaQuery) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+          padding: EdgeInsets.only(
+              top: mediaQuery.size.height / 1.7 - 32.0, right: 32.0),
+          child: FloatingActionButton(
+            child: Icon(
+              Icons.play_arrow,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.cyan,
+            onPressed: () {
+              // Nanti di arahkan ke halaman baru
+            },
+          )),
+    );
+  }
+
+  Widget _buildWidgetHeaderSong() {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Icon(
-          Icons.menu,
-          color: Colors.white,
+        Text(
+          'Popular',
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 24.0,
+              fontFamily: 'Campton_Light'),
         ),
-        Icon(
-          Icons.info_outline,
-          color: Colors.white,
+        Text(
+          'Show all',
+          style: TextStyle(
+              color: Colors.cyan,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Campton_Light'),
         )
       ],
-    ),
-  );
+    );
+  }
+
+  Widget _buildWidgetListSong(MediaQueryData mediaQuery) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 20.0,
+        top: mediaQuery.size.height / 1.8 + 48.0,
+        right: 20.0,
+        bottom: mediaQuery.padding.bottom + 20.0,
+      ),
+      child: Column(
+        children: <Widget>[
+          _buildWidgetHeaderSong(),
+          SizedBox(height: 16.0),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              itemBuilder: (BuildContext context, int index) {
+                Song song = listSong[index];
+                print(song);
+                return GestureDetector(
+                  onTap: () {},
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          song.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Campton_Light',
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        song.duration,
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(width: 24.0),
+                      Icon(
+                        Icons.more_horiz,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Opacity(
+                  opacity: 0.5,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2.0),
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                );
+              },
+              itemCount: listSong.length,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void initListSong() {
+    listSong.add(Song(title: 'Lemon', duration: '4:15'));
+    listSong.add(Song(title: 'Peace Sign', duration: '3:59'));
+    listSong.add(Song(title: 'Eine Kleine', duration: '4:48'));
+    listSong.add(Song(title: 'Unbelievers', duration: '4:43'));
+    listSong.add(Song(title: 'Loser', duration: '4:04'));
+    listSong.add(Song(title: 'Moonlight', duration: '3:45'));
+    listSong.add(Song(title: 'Wooden Doll', duration: '4:07'));
+  }
+}
+
+class Song {
+  String title;
+  String duration;
+
+  Song({this.title, this.duration});
+
+  @override
+  String toString() {
+    return 'Song{title: $title, duration: $duration}';
+  }
 }
