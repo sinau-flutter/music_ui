@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(48.0)),
           image: DecorationImage(
-              image: AssetImage('assets/kenshi-yonezu-cover.jpg'),
+              image: AssetImage('assets/clairo-bubble.jpg'),
               fit: BoxFit.cover)),
     );
   }
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Positioned(
                   child: Text(
-                    'Yonezu',
+                    'Cottrill',
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'CoralPen',
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Positioned(
                   child: Text(
-                    'Kenshi',
+                    'Clairo',
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'CoralPen',
@@ -236,13 +236,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void initListSong() {
-    listSong.add(Song(title: 'Lemon', duration: '4:15'));
-    listSong.add(Song(title: 'Peace Sign', duration: '3:59'));
-    listSong.add(Song(title: 'Eine Kleine', duration: '4:48'));
-    listSong.add(Song(title: 'Unbelievers', duration: '4:43'));
-    listSong.add(Song(title: 'Loser', duration: '4:04'));
-    listSong.add(Song(title: 'Moonlight', duration: '3:45'));
-    listSong.add(Song(title: 'Wooden Doll', duration: '4:07'));
+    listSong.add(Song(title: 'Pretty Girl', duration: '2:58'));
+    listSong.add(Song(title: 'Flamming Hot Cheetos', duration: '2:03'));
+    listSong.add(Song(title: '4EVER', duration: '2:39'));
+    listSong.add(Song(title: 'Bubble Gum', duration: '2:55'));
+    listSong.add(Song(title: 'Softly', duration: '3:05'));
+    listSong.add(Song(title: 'Closer To You', duration: '3:04'));
+    listSong.add(Song(title: 'Drown', duration: '3:54'));
   }
 }
 
